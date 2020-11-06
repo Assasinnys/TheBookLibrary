@@ -47,7 +47,7 @@ class RegistrationFragment : Fragment() {
     private fun setupViewModelObservers() {
         viewModel.apply {
             isRegistered.observe(viewLifecycleOwner) {
-                toast("Registered")
+                if(it) toast("Registered")
             }
             toastError.observe(viewLifecycleOwner) {
                 toast(it)
