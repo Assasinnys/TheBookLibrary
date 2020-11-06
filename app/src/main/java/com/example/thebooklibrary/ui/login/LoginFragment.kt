@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.thebooklibrary.di.ViewModelFactory
 import com.example.thebooklibrary.util.daggerAppComponent
 import com.example.thebooklibrary.util.toast
 import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.FragmentLoginBinding
+import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -50,6 +52,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObservers()
+        btn_registration.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
     }
 
     private fun setupViewModelObservers() {

@@ -11,15 +11,15 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(private val repository: MainRepository) : ViewModel(), DefaultLifecycleObserver {
 
-    val _userLogin = MutableLiveData<String>()
-    val _userPass = MutableLiveData<String>()
+    val userLogin = MutableLiveData<String>()
+    val userPass = MutableLiveData<String>()
     private val _isLoggedIn = MutableLiveData(false)
     private val _loginErrorField = MutableLiveData(R.string.no_error)
     private val _passErrorField = MutableLiveData(R.string.no_error)
     private val _toastError = MutableLiveData<String>()
 
-    val userLogin: LiveData<String> get() = _userLogin
-    val userPass: LiveData<String> get() = _userPass
+//    val userLogin: LiveData<String> get() = _userLogin
+//    val userPass: LiveData<String> get() = _userPass
     val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
     val loginErrorField: LiveData<Int> get() = _loginErrorField
     val passErrorField: LiveData<Int> get() = _passErrorField
@@ -34,8 +34,8 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
     }
 
     fun userLoginTry() {
-        val login = _userLogin.value
-        val pass = _userPass.value
+        val login = userLogin.value
+        val pass = userPass.value
 
         if (isValidFields(login, pass)) {
             viewModelScope.launch {

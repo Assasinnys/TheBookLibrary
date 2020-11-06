@@ -1,7 +1,7 @@
 package com.example.thebooklibrary.di
 
 import com.example.thebooklibrary.network.BookApi
-import com.example.booklibrary.util.BASE_URL
+import com.example.thebooklibrary.util.BASE_URL
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,6 +15,7 @@ class NetworkModule {
     @Singleton
     fun getRetrofit(): BookApi {
         return Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create()).baseUrl(
-            BASE_URL).build().create(BookApi::class.java)
+            BASE_URL
+        ).build().create(BookApi::class.java)
     }
 }

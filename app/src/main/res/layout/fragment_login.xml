@@ -34,7 +34,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel._userLogin}"
+                android:text="@={viewModel.userLogin}"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel._userPass}"
+                android:text="@={viewModel.userPass}"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
