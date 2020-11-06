@@ -44,5 +44,7 @@ fun TextInputLayout.applyError(errorText: String) {
 }*/
 
 fun Fragment.toast(text: String, isLong: Boolean = false) {
+    if (text.isEmpty()) return
+
     Toast.makeText(context, text, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
 }

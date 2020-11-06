@@ -3,6 +3,7 @@ package com.example.thebooklibrary.model
 import com.example.thebooklibrary.network.BookApi
 import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.BaseResponse
+import com.example.thebooklibrary.network.response.ErrorRegistrationResponse
 import com.example.thebooklibrary.network.response.ErrorResponse
 import com.squareup.moshi.Moshi
 import retrofit2.Response
@@ -14,24 +15,22 @@ class MainRepository @Inject constructor(private val api: BookApi) {
 
     private val moshi = Moshi.Builder().build()
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     suspend fun loginUser(login: String, pass: String): BaseResponse? {
         val request = UserAuthRequest(login, pass)
-        return processResponse(api.login(request))
+        return processResponse(api.login(request), ErrorResponse::class.java)
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     suspend fun register(login: String, pass: String): BaseResponse? {
         val request = UserAuthRequest(login, pass)
-        return processResponse(api.register(request))
+        return processResponse(api.register(request), ErrorRegistrationResponse::class.java)
     }
 
-    private fun processResponse(response: Response<out BaseResponse>): BaseResponse? {
+    private fun <T : BaseResponse> processResponse(response: Response<out BaseResponse>, errorClass: Class<T>): BaseResponse? {
         return if (response.isSuccessful) {
             response.body()
         } else {
             response.errorBody()?.string()?.let {
-                moshi.adapter(ErrorResponse::class.java).fromJson(it)
+                moshi.adapter(errorClass).fromJson(it)
             }
         }
     }

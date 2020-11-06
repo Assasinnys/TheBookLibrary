@@ -31,6 +31,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
 
     override fun onStart(owner: LifecycleOwner) {
         _isLoggedIn.value = false
+        _toastError.value = ""
     }
 
     fun userLoginTry() {

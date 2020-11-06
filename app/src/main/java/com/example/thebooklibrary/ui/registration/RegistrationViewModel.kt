@@ -33,6 +33,7 @@ class RegistrationViewModel @Inject constructor(
 
     override fun onStart(owner: LifecycleOwner) {
         _isRegistered.value = false
+        _toastError.value = ""
     }
 
     fun onRegisterClick() {
