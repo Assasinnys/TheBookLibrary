@@ -1,12 +1,13 @@
 package com.example.thebooklibrary.ui.registration
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.thebooklibrary.model.MainRepository
 import javax.inject.Inject
-import com.example.thebooklibrary.R
-import com.example.thebooklibrary.network.response.BaseResponse
-import com.example.thebooklibrary.network.response.ErrorResponse
-import com.example.thebooklibrary.network.response.UserLoginResponse
+import com.example.thebooklibrary.network.response.*
+import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
+import com.example.thebooklibrary.util.ERR_PASS_DIFF
+import com.example.thebooklibrary.util.NO_ERROR
 import kotlinx.coroutines.launch
 
 /**
@@ -22,8 +23,8 @@ class RegistrationViewModel @Inject constructor(
     val confPassField = MutableLiveData<String>()
 
     private val _isRegistered = MutableLiveData(false)
-    private val _loginErrorField = MutableLiveData(R.string.no_error)
-    private val _passErrorField = MutableLiveData(R.string.no_error)
+    private val _loginErrorField = MutableLiveData(NO_ERROR)
+    private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
 
     val isRegistered: LiveData<Boolean> get() = _isRegistered
@@ -55,32 +56,37 @@ class RegistrationViewModel @Inject constructor(
             is ErrorResponse -> {
                 _toastError.value = response.data
             }
-            is UserLoginResponse -> {
+            is UserRegistrationResponse -> {
                 _isRegistered.value = true
+            }
+            is ErrorRegistrationResponse -> {
+                response.data.mail?.let {
+
+                }
+                Log.d("asd", "error: ${response.data.mail?.joinToString(" ")} + ${response.data.password?.joinToString(" ")}")
             }
         }
     }
-
 
     private fun isValidFields(login: String?, pass: String?, confPass: String?): Boolean {
         var isValid = true
 
         if (login.isNullOrEmpty()) {
-            _loginErrorField.value = R.string.error_empty_field
+            _loginErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            _loginErrorField.value = R.string.no_error
+            _loginErrorField.value = NO_ERROR
         }
 
         if (pass.isNullOrEmpty()) {
-            _passErrorField.value = R.string.error_empty_field
+            _passErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            _passErrorField.value = R.string.no_error
+            _passErrorField.value = NO_ERROR
         }
 
         if (pass != confPass) {
-            _passErrorField.value = R.string.error_pass_not_eq
+            _passErrorField.value = ERR_PASS_DIFF
             isValid = false
         }
         return isValid

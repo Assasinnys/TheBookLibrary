@@ -1,11 +1,12 @@
 package com.example.thebooklibrary.ui.login
 
 import androidx.lifecycle.*
-import com.example.thebooklibrary.R
 import com.example.thebooklibrary.model.MainRepository
 import com.example.thebooklibrary.network.response.BaseResponse
 import com.example.thebooklibrary.network.response.ErrorResponse
 import com.example.thebooklibrary.network.response.UserLoginResponse
+import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
+import com.example.thebooklibrary.util.NO_ERROR
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,8 +15,8 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
     val userLogin = MutableLiveData<String>()
     val userPass = MutableLiveData<String>()
     private val _isLoggedIn = MutableLiveData(false)
-    private val _loginErrorField = MutableLiveData(R.string.no_error)
-    private val _passErrorField = MutableLiveData(R.string.no_error)
+    private val _loginErrorField = MutableLiveData(NO_ERROR)
+    private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
 
 //    val userLogin: LiveData<String> get() = _userLogin
@@ -61,17 +62,17 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
         var isValid = true
 
         if (login.isNullOrEmpty()) {
-            _loginErrorField.value = R.string.error_empty_field
+            _loginErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            _loginErrorField.value = R.string.no_error
+            _loginErrorField.value = NO_ERROR
         }
 
         if (pass.isNullOrEmpty()) {
-            _passErrorField.value = R.string.error_empty_field
+            _passErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            _passErrorField.value = R.string.no_error
+            _passErrorField.value = NO_ERROR
         }
 
         return isValid
