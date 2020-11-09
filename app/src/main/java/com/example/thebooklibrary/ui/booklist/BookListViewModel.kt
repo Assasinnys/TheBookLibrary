@@ -17,14 +17,19 @@ class BookListViewModel @Inject constructor(private val repository: MainReposito
     private val _toastError = MutableLiveData<String>()
     val toastError: LiveData<String> get() = _toastError
 
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     override fun onCreate(owner: LifecycleOwner) {
         requestBookList()
     }
 
     private fun requestBookList() {
+        _isLoading.value = true
         viewModelScope.launch {
             val response = repository.getBookList(1)
             response?.let { checkResponse(it) }
+            _isLoading.value = false
         }
     }
 

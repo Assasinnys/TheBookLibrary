@@ -18,6 +18,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
     private val _loginErrorField = MutableLiveData(NO_ERROR)
     private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
+    private val _isLoading = MutableLiveData(false)
 
 //    val userLogin: LiveData<String> get() = _userLogin
 //    val userPass: LiveData<String> get() = _userPass
@@ -25,6 +26,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
     val loginErrorField: LiveData<Int> get() = _loginErrorField
     val passErrorField: LiveData<Int> get() = _passErrorField
     val toastError: LiveData<String> get() = _toastError
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     override fun onCreate(owner: LifecycleOwner) {
         // TODO request previous login
@@ -40,9 +42,11 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
         val pass = userPass.value
 
         if (isValidFields(login, pass)) {
+            _isLoading.value = true
             viewModelScope.launch {
                 val response = repository.loginUser(login!!, pass!!)
                 response?.let { checkResponse(it) }
+                _isLoading.value = false
             }
         }
     }

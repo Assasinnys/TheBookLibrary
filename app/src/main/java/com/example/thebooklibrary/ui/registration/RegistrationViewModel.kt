@@ -26,11 +26,13 @@ class RegistrationViewModel @Inject constructor(
     private val _loginErrorField = MutableLiveData(NO_ERROR)
     private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
+    private val _isLoading = MutableLiveData(false)
 
     val isRegistered: LiveData<Boolean> get() = _isRegistered
     val loginErrorField: LiveData<Int> get() = _loginErrorField
     val passErrorField: LiveData<Int> get() = _passErrorField
     val toastError: LiveData<String> get() = _toastError
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     override fun onStart(owner: LifecycleOwner) {
         _isRegistered.value = false
@@ -43,11 +45,12 @@ class RegistrationViewModel @Inject constructor(
         val confPass = confPassField.value
 
         if (!isValidFields(login, pass, confPass)) return
-
+        _isLoading.value = true
         viewModelScope.launch {
             repository.register(login!!, pass!!)?.let {
                 checkResponse(it)
             }
+            _isLoading.value = false
         }
     }
 
