@@ -53,6 +53,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
                 _toastError.value = response.data
             }
             is UserLoginResponse -> {
+                repository.token = response.data
                 _isLoggedIn.value = true
             }
         }

@@ -13,11 +13,22 @@
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.thebooklibrary.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookListFragment"
+        android:name="com.example.thebooklibrary.ui.booklist.BookListFragment"
+        android:label="BookListFragment" />
 </navigation>

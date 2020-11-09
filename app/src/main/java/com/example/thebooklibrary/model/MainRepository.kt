@@ -1,5 +1,6 @@
 package com.example.thebooklibrary.model
 
+import android.util.Log
 import com.example.thebooklibrary.network.BookApi
 import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.BaseResponse
@@ -14,6 +15,11 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(private val api: BookApi) {
 
     private val moshi = Moshi.Builder().build()
+    var token: String = ""
+        set(value) {
+            field = "Bearer $value"
+            Log.d("ASD", "Token: $field")
+        }
 
     suspend fun loginUser(login: String, pass: String): BaseResponse? {
         val request = UserAuthRequest(login, pass)
@@ -33,5 +39,9 @@ class MainRepository @Inject constructor(private val api: BookApi) {
                 moshi.adapter(errorClass).fromJson(it)
             }
         }
+    }
+
+    suspend fun getBookList(page: Int, limit: Int = 50): BaseResponse? {
+        return processResponse(api.getListOfBooks(token, limit, page), ErrorResponse::class.java)
     }
 }

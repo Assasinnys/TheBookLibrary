@@ -1,6 +1,7 @@
 package com.example.thebooklibrary.di
 
 import android.content.Context
+import com.example.thebooklibrary.ui.booklist.BookListFragment
 import com.example.thebooklibrary.ui.login.LoginFragment
 import com.example.thebooklibrary.ui.registration.RegistrationFragment
 import dagger.BindsInstance
@@ -18,4 +19,5 @@ interface AppComponent {
 
     fun inject(fragment: LoginFragment)
     fun inject(fragment: RegistrationFragment)
+    fun inject(fragment: BookListFragment)
 }

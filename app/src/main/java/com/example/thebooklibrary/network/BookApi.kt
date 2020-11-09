@@ -5,10 +5,7 @@ import com.example.thebooklibrary.network.response.BookListResponse
 import com.example.thebooklibrary.network.response.UserLoginResponse
 import com.example.thebooklibrary.network.response.UserRegistrationResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface BookApi {
 
@@ -19,6 +16,10 @@ interface BookApi {
     suspend fun register(@Body registerRequest: UserAuthRequest): Response<UserRegistrationResponse>
 
     @GET("api/v1/books")
-    suspend fun getListOfBooks(@Query(value = "limit") limit: Int, @Query(value = "page") page: Int): Response<BookListResponse>
+    suspend fun getListOfBooks(
+        @Header("Authorization") beaverToken: String,
+        @Query(value = "limit") limit: Int,
+        @Query(value = "page") page: Int
+    ): Response<BookListResponse>
 
 }
