@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.FragmentBookListBinding
 import com.example.thebooklibrary.di.ViewModelFactory
+import com.example.thebooklibrary.util.BookPagingAdapter
 import com.example.thebooklibrary.util.daggerAppComponent
 import com.example.thebooklibrary.util.toast
 import javax.inject.Inject
@@ -51,12 +52,16 @@ class BookListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObservers()
+        binding.rvBooks.adapter = BookPagingAdapter()
     }
 
     private fun setupViewModelObservers() {
         viewModel.apply {
             toastError.observe(viewLifecycleOwner) {
                 toast(it)
+            }
+            bookLiveData.observe(viewLifecycleOwner) {
+                (binding.rvBooks.adapter as BookPagingAdapter).submitList(it)
             }
         }
     }
