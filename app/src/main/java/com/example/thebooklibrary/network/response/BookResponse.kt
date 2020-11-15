@@ -4,4 +4,4 @@ import com.example.thebooklibrary.model.Book
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class BookListResponse(val data: List<Book>, code: Int, status: String) : BaseResponse(code, status)
+class BookResponse(val data: Book, code: Int, status: String) : BaseResponse(code, status)

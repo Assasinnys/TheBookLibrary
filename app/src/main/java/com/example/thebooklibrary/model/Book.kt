@@ -3,7 +3,7 @@ package com.example.thebooklibrary.model
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = false)
+@JsonClass(generateAdapter = true)
 data class Book(
     @Json(name = "id") val id: Long?,
     @Json(name = "name") var name: String?,

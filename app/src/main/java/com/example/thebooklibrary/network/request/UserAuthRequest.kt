@@ -1,9 +1,10 @@
 package com.example.thebooklibrary.network.request
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = false)
+@JsonClass(generateAdapter = true)
 data class UserAuthRequest(
-    val mail: String,
-    val password: String
+    @Json(name = "mail") val mail: String,
+    @Json(name = "password") val password: String
 )

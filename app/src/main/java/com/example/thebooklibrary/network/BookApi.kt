@@ -2,6 +2,7 @@ package com.example.thebooklibrary.network
 
 import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.BookListResponse
+import com.example.thebooklibrary.network.response.BookResponse
 import com.example.thebooklibrary.network.response.UserLoginResponse
 import com.example.thebooklibrary.network.response.UserRegistrationResponse
 import retrofit2.Response
@@ -17,9 +18,15 @@ interface BookApi {
 
     @GET("api/v1/books")
     suspend fun getListOfBooks(
-        @Header("Authorization") beaverToken: String,
+        @Header("Authorization") bearerToken: String,
         @Query(value = "limit") limit: Int,
         @Query(value = "page") page: Int
     ): Response<BookListResponse>
+
+    @GET("api/v1/books/{id}")
+    suspend fun getBook(
+        @Header("Authorization") bearerToken: String,
+        @Path("id") id: Long
+    ): Response<BookResponse>
 
 }

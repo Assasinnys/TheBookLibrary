@@ -12,13 +12,12 @@ class BookDataSource (private val repository: MainRepository) :
     PageKeyedDataSource<Int ,Book>() {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private var pageCount = 1
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Book>) {
         scope.launch {
-            when (val books = repository.getBookList(pageCount, params.requestedLoadSize)) {
+            when (val books = repository.getBookList(START_PAGE, params.requestedLoadSize)) {
                 is BookListResponse -> {
-                    callback.onResult(books.data, null, pageCount.plus(1))
+                    callback.onResult(books.data, null, START_PAGE.plus(1))
                 }
             }
         }
@@ -34,5 +33,9 @@ class BookDataSource (private val repository: MainRepository) :
                 }
             }
         }
+    }
+
+    companion object {
+        private const val START_PAGE = 1
     }
 }
