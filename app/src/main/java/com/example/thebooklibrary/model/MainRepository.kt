@@ -1,6 +1,5 @@
 package com.example.thebooklibrary.model
 
-import android.util.Log
 import com.example.thebooklibrary.network.BookApi
 import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.BaseResponse
@@ -18,8 +17,9 @@ class MainRepository @Inject constructor(private val api: BookApi) {
     var token: String = ""
         set(value) {
             field = "Bearer $value"
-            Log.d("ASD", "Token: $field")
         }
+
+    private var selectedBookId: Long? = null
 
     suspend fun loginUser(login: String, pass: String): BaseResponse? {
         val request = UserAuthRequest(login, pass)
@@ -43,5 +43,21 @@ class MainRepository @Inject constructor(private val api: BookApi) {
 
     suspend fun getBookList(page: Int, limit: Int = 50): BaseResponse? {
         return processResponse(api.getListOfBooks(token, limit, page), ErrorResponse::class.java)
+    }
+
+    suspend fun getBook(): BaseResponse? {
+        selectedBookId?.let { id ->
+            val request = api.getBook(token, id)
+            return processResponse(request, ErrorResponse::class.java)
+        }
+        return null
+    }
+
+    fun saveSelectedBook(id: Long) {
+        selectedBookId = id
+    }
+
+    fun resetSelectedBook() {
+        selectedBookId = null
     }
 }

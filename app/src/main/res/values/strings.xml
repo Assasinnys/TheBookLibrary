@@ -11,4 +11,10 @@
     <string name="no_error" translatable="false" />
     <string name="error_empty_field">Empty field</string>
     <string name="error_pass_not_eq">Passwords are not equals</string>
+
+    <string name="book_title">Title:</string>
+    <string name="book_created">Created:</string>
+    <string name="book_updated">Updated:</string>
+    <string name="book_status">Status:</string>
+    <string name="book_deadline">Deadline:</string>
 </resources>

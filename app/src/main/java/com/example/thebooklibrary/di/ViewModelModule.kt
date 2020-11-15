@@ -2,6 +2,7 @@ package com.example.thebooklibrary.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.thebooklibrary.ui.bookdetails.BookDetailsViewModel
 import com.example.thebooklibrary.ui.booklist.BookListViewModel
 import com.example.thebooklibrary.ui.login.LoginViewModel
 import com.example.thebooklibrary.ui.registration.RegistrationViewModel
@@ -27,6 +28,11 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(BookListViewModel::class)
     fun bookListViewModel(bookListViewModel: BookListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BookDetailsViewModel::class)
+    fun bookDetailsViewModel(bookListViewModel: BookDetailsViewModel): ViewModel
 
     @Binds
     @Singleton

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.FragmentBookListBinding
 import com.example.thebooklibrary.di.ViewModelFactory
@@ -52,7 +53,9 @@ class BookListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObservers()
-        binding.rvBooks.adapter = BookPagingAdapter()
+        binding.rvBooks.adapter = BookPagingAdapter {
+            viewModel.showBookDetails(it.tag)
+        }
     }
 
     private fun setupViewModelObservers() {
@@ -62,6 +65,9 @@ class BookListFragment : Fragment() {
             }
             bookLiveData.observe(viewLifecycleOwner) {
                 (binding.rvBooks.adapter as BookPagingAdapter).submitList(it)
+            }
+            showBookDetails.observe(viewLifecycleOwner) {
+                if (it) findNavController().navigate(R.id.action_bookListFragment_to_bookDetailsFragment)
             }
         }
     }

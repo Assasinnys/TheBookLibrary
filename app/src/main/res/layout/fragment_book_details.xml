@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.thebooklibrary.ui.bookdetails.BookDetailsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title_name"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@string/book_title"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                app:layout_constraintEnd_toStartOf="@+id/tv_name"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_title_created"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@string/book_created"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_created"
+                app:layout_constraintEnd_toStartOf="@+id/tv_created"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_created" />
+
+            <TextView
+                android:id="@+id/tv_title_updated"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@string/book_updated"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_updated"
+                app:layout_constraintEnd_toStartOf="@+id/tv_updated"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_updated" />
+
+            <TextView
+                android:id="@+id/tv_title_status"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@string/book_status"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_status"
+                app:layout_constraintEnd_toStartOf="@+id/tv_status"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_status" />
+
+            <TextView
+                android:id="@+id/tv_title_deadline"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@string/book_deadline"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_deadline"
+                app:layout_constraintEnd_toStartOf="@+id/tv_deadline"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_deadline" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.bookTitle}"
+                app:layout_constraintBottom_toTopOf="@id/tv_created"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Test Text" />
+
+            <TextView
+                android:id="@+id/tv_created"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/tv_updated"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_created"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:text="Test Text" />
+
+            <TextView
+                android:id="@+id/tv_updated"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.book.updatedAt.toString()}"
+                app:layout_constraintBottom_toTopOf="@id/tv_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_updated"
+                app:layout_constraintTop_toBottomOf="@id/tv_created"
+                tools:text="Test Text" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.book.status}"
+                app:layout_constraintBottom_toTopOf="@id/tv_deadline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_status"
+                app:layout_constraintTop_toBottomOf="@id/tv_updated"
+                tools:text="Test Text" />
+
+            <TextView
+                android:id="@+id/tv_deadline"
+                style="@style/BookDetails.TextView"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.book.deadline.toString()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_deadline"
+                app:layout_constraintTop_toBottomOf="@id/tv_status"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Test Text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
