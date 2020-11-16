@@ -12,6 +12,11 @@
     <string name="error_empty_field">Empty field</string>
     <string name="error_pass_not_eq">Passwords are not equals</string>
 
+    <string name="error_already_exist">This email has already been taken</string>
+    <string name="error_incorrect_pass">Password is too short (minimum is 6 characters)</string>
+    <string name="error_invalid_email">Email is invalid</string>
+    <string name="error_connection_problem">Failed to connect with server</string>
+
     <string name="book_title">Title:</string>
     <string name="book_created">Created:</string>
     <string name="book_updated">Updated:</string>

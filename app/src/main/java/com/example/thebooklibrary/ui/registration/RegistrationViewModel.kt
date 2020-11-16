@@ -5,9 +5,7 @@ import androidx.lifecycle.*
 import com.example.thebooklibrary.model.MainRepository
 import javax.inject.Inject
 import com.example.thebooklibrary.network.response.*
-import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
-import com.example.thebooklibrary.util.ERR_PASS_DIFF
-import com.example.thebooklibrary.util.NO_ERROR
+import com.example.thebooklibrary.util.*
 import kotlinx.coroutines.launch
 
 /**
@@ -47,11 +45,42 @@ class RegistrationViewModel @Inject constructor(
         if (!isValidFields(login, pass, confPass)) return
         _isLoading.value = true
         viewModelScope.launch {
-            repository.register(login!!, pass!!)?.let {
-                checkResponse(it)
-            }
+            checkResult(repository.register(login!!, pass!!))
             _isLoading.value = false
         }
+    }
+
+    private fun checkResult(resultData: ResultData<UserRegistrationResponse>) {
+        when (resultData) {
+            is ResultData.Success -> {
+                repository.token = resultData.value.data.token
+                _isRegistered.value = true
+            }
+
+            is ResultData.Failure -> processError(resultData.message)
+        }
+    }
+
+    private fun processError(input: String) {
+        val errors = input.split("|||")
+        val loginError = errors[0]
+        if (loginError.isNotEmpty()) {
+            _loginErrorField.value = when {
+                loginError.contains("is invalid") -> ERR_INVALID_EMAIL
+                loginError.contains("has already been taken") -> ERR_ALREADY_EXIST
+                else -> NO_ERROR
+            }
+        }
+
+        val passError = errors[1]
+        if (passError.isNotEmpty()) {
+            _passErrorField.value = when {
+                passError.contains("is too short") -> ERR_PASS_TOO_SHORT
+                else -> NO_ERROR
+            }
+        }
+
+        Log.d("ASD", "viewModel: ${errors.joinToString()} null check: ${errors[0].isEmpty()}")
     }
 
     private fun checkResponse(response: BaseResponse) {

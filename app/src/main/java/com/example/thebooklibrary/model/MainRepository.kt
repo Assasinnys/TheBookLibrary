@@ -25,9 +25,8 @@ class MainRepository @Inject constructor(private val api: BookApi, private val r
         return remoteSource.login(login, pass)
     }
 
-    suspend fun register(login: String, pass: String): BaseResponse? {
-        val request = UserAuthRequest(login, pass)
-        return processResponse(api.register(request), ErrorRegistrationResponse::class.java)
+    suspend fun register(login: String, pass: String): ResultData<UserRegistrationResponse> {
+        return remoteSource.register(login, pass)
     }
 
     private fun <T : BaseResponse> processResponse(response: Response<out BaseResponse>, errorClass: Class<T>): BaseResponse? {

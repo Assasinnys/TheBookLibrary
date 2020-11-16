@@ -1,6 +1,7 @@
 package com.example.thebooklibrary.util
 
 import com.example.thebooklibrary.network.response.BaseResponse
+import com.example.thebooklibrary.network.response.ErrorRegistrationResponse
 import com.example.thebooklibrary.network.response.ErrorResponse
 import com.squareup.moshi.Moshi
 import retrofit2.Response
@@ -44,6 +45,8 @@ abstract class BaseDataSource {
             errorString?.let { moshi.adapter(errorClass).fromJson(it) }) {
 
             is ErrorResponse -> ResultData.failure(error.data)
+
+            is ErrorRegistrationResponse -> ResultData.failure("${error.data.mail?.joinToString() ?: ""}|||${error.data.password?.joinToString() ?: ""}")
 
             else -> ResultData.failure(CONNECTION_ERROR)
         }

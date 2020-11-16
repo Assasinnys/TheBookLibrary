@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.FragmentRegistrationBinding
 import com.example.thebooklibrary.di.ViewModelFactory
@@ -47,7 +48,10 @@ class RegistrationFragment : Fragment() {
     private fun setupViewModelObservers() {
         viewModel.apply {
             isRegistered.observe(viewLifecycleOwner) {
-                if(it) toast("Registered")
+                if(it){
+                    toast("Registered")
+                    findNavController().navigate(R.id.action_registrationFragment_to_bookListFragment)
+                }
             }
             toastError.observe(viewLifecycleOwner) {
                 toast(it)
