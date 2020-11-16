@@ -1,11 +1,16 @@
 package com.example.thebooklibrary.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.thebooklibrary.util.BOOK_TABLE
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(tableName = BOOK_TABLE)
 @JsonClass(generateAdapter = true)
 data class Book(
-    @Json(name = "id") val id: Long?,
+    @PrimaryKey
+    @Json(name = "id") val id: Long,
     @Json(name = "name") var name: String?,
     @Json(name = "owner_id") var ownerId: Long?,
     @Json(name = "created_at") val createdAt: String?,
