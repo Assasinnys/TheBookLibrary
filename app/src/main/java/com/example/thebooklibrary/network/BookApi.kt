@@ -19,8 +19,8 @@ interface BookApi {
     @GET("api/v1/books")
     suspend fun getListOfBooks(
         @Header("Authorization") bearerToken: String,
-        @Query(value = "limit") limit: Int,
-        @Query(value = "page") page: Int
+        @Query(value = "page") limit: Int,
+        @Query(value = "limit") page: Int
     ): Response<BookListResponse>
 
     @GET("api/v1/books/{id}")

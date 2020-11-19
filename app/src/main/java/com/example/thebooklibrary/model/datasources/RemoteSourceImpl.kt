@@ -5,15 +5,11 @@ import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.*
 import com.example.thebooklibrary.util.BaseDataSource
 import com.example.thebooklibrary.util.ResultData
-import com.squareup.moshi.Moshi
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RemoteSourceImpl @Inject constructor(private val api: BookApi) : RemoteSource, BaseDataSource() {
-
-//    private val moshi = Moshi.Builder().build()
 
     override suspend fun getBook(token: String, bookId: Long): ResultData<BookResponse> {
         return getData(ErrorResponse::class.java) {
@@ -38,14 +34,4 @@ class RemoteSourceImpl @Inject constructor(private val api: BookApi) : RemoteSou
             api.getListOfBooks(token, page, limit)
         }
     }
-
-    /*private fun <T : BaseResponse> processResponse(response: Response<out BaseResponse>, errorClass: Class<T>): BaseResponse? {
-        return if (response.isSuccessful) {
-            response.body()
-        } else {
-            response.errorBody()?.string()?.let {
-                moshi.adapter(errorClass).fromJson(it)
-            }
-        }
-    }*/
 }

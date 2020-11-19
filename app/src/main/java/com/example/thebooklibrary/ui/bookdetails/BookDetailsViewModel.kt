@@ -7,8 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thebooklibrary.model.Book
 import com.example.thebooklibrary.model.MainRepository
-import com.example.thebooklibrary.network.response.BookResponse
-import com.example.thebooklibrary.network.response.ErrorResponse
+import com.example.thebooklibrary.util.ResultData
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,16 +23,19 @@ class BookDetailsViewModel @Inject constructor(private val repository: MainRepos
     val bookTitle: LiveData<String> get() = _bookTitle
 
     init {
+        requestSelectedBook()
+    }
+
+    private fun requestSelectedBook() {
         viewModelScope.launch {
             when (val response = repository.getBook()) {
-                is BookResponse -> {
-                    _book.value = response.data
-                    Log.d("ASD", "${response.data.createdAt}")
-                    _bookTitle.value = response.data.name
+
+                is ResultData.Success -> {
+                    _book.value = response.value.data
+                    _bookTitle.value = response.value.data.name
                 }
-                is ErrorResponse -> {
-                    _toastError.value = response.data
-                }
+
+                is ResultData.Failure -> _toastError.value = response.message
             }
         }
     }

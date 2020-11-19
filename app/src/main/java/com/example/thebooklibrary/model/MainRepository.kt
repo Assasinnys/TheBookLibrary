@@ -39,16 +39,23 @@ class MainRepository @Inject constructor(private val api: BookApi, private val r
         }
     }
 
-    suspend fun getBookList(page: Int, limit: Int = 50): BaseResponse? {
-        return processResponse(api.getListOfBooks(token, limit, page), ErrorResponse::class.java)
+    suspend fun getBookList(page: Int, limit: Int): ResultData<BookListResponse> {
+        return remoteSource.getBookList(token, page, limit)
     }
 
-    suspend fun getBook(): BaseResponse? {
+    /*suspend fun getBook(): BaseResponse? {
         selectedBookId?.let { id ->
             val request = api.getBook(token, id)
             return processResponse(request, ErrorResponse::class.java)
         }
         return null
+    }*/
+
+    suspend fun getBook(): ResultData<BookResponse> {
+        selectedBookId?.let { id ->
+            return remoteSource.getBook(token, id)
+        }
+        return ResultData.failure("Book is not specified")
     }
 
     fun saveSelectedBook(id: Long) {
