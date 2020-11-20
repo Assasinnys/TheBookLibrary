@@ -22,4 +22,7 @@
     <string name="book_updated">Updated:</string>
     <string name="book_status">Status:</string>
     <string name="book_deadline">Deadline:</string>
+
+    <string name="title_personal_book">Personal Books</string>
+    <string name="title_profile">My Profile</string>
 </resources>

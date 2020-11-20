@@ -19,10 +19,7 @@ class BookPagingAdapter(private val listener: View.OnClickListener) : PagedListA
         }
 
         fun bind(book: Book) {
-            binding.apply {
-                this.book = book
-                root.tag = book.id
-            }
+            binding.book = book
         }
     }
 

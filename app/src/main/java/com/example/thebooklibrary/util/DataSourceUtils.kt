@@ -1,5 +1,6 @@
 package com.example.thebooklibrary.util
 
+import android.util.Log
 import com.example.thebooklibrary.network.response.BaseResponse
 import com.example.thebooklibrary.network.response.ErrorRegistrationResponse
 import com.example.thebooklibrary.network.response.ErrorResponse
@@ -30,10 +31,12 @@ abstract class BaseDataSource {
     protected suspend fun <T> getData(errorClass: Class<out BaseResponse>, call: suspend () -> Response<T>): ResultData<T> {
         try {
             val response = call()
-            if (response.isSuccessful)
+            if (response.isSuccessful) {
                 response.body()?.let {
                     return ResultData.success(it)
                 }
+                return ResultData.failure(response.message())
+            }
             return formatError(response.errorBody()?.string(), errorClass)
         } catch (exception: Exception) {
             return formatError(null, null)

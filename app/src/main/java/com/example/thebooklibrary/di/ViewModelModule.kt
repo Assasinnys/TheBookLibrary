@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.thebooklibrary.ui.bookdetails.BookDetailsViewModel
 import com.example.thebooklibrary.ui.booklist.BookListViewModel
 import com.example.thebooklibrary.ui.login.LoginViewModel
+import com.example.thebooklibrary.ui.personalbooks.PersonalBooksViewModel
 import com.example.thebooklibrary.ui.registration.RegistrationViewModel
 import dagger.Binds
 import dagger.Module
@@ -33,6 +34,11 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(BookDetailsViewModel::class)
     fun bookDetailsViewModel(bookListViewModel: BookDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PersonalBooksViewModel::class)
+    fun personalBooksViewModel(personalBooksViewModel: PersonalBooksViewModel): ViewModel
 
     @Binds
     @Singleton

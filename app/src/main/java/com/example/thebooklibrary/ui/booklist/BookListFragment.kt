@@ -2,9 +2,7 @@ package com.example.thebooklibrary.ui.booklist
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,7 +42,6 @@ class BookListFragment : Fragment() {
         ).apply {
             viewModel = this@BookListFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
-            executePendingBindings()
         }
 
         return binding.root
@@ -52,9 +49,30 @@ class BookListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setupViewModelObservers()
         binding.rvBooks.adapter = BookPagingAdapter {
             viewModel.showBookDetails(it.tag)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_personal_book -> {
+                findNavController().navigate(R.id.action_bookListFragment_to_personalBooksFragment)
+                true
+            }
+
+            R.id.menu_profile -> {
+                TODO("navigate to profile fragment")
+//                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

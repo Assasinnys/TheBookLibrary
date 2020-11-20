@@ -12,10 +12,11 @@ fun setErrorText(inputLayout: TextInputLayout, errorId: Int) {
     }
 }
 
+/*
 @BindingAdapter("app:bookList")
 fun setBookList(recyclerView: RecyclerView, books: List<Book>) {
     when (val adapter = recyclerView.adapter) {
         null -> recyclerView.adapter = BookListAdapter(books.toMutableList())
         is BookListAdapter -> adapter.setList(books)
     }
-}
+}*/

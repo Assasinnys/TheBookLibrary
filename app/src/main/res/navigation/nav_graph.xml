@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_bookListFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
+        <action
+            android:id="@+id/action_bookListFragment_to_personalBooksFragment"
+            app:destination="@id/personalBooksFragment" />
     </fragment>
 
     <fragment
@@ -44,4 +47,14 @@
         android:name="com.example.thebooklibrary.ui.bookdetails.BookDetailsFragment"
         tools:layout="@layout/fragment_book_details"
         android:label="BookDetailsFragment" />
+
+    <fragment
+        android:id="@+id/personalBooksFragment"
+        tools:layout="@layout/fragment_personal_books"
+        android:name="com.example.thebooklibrary.ui.personalbooks.PersonalBooksFragment"
+        android:label="PersonalBooksFragment" >
+        <action
+            android:id="@+id/action_personalBooksFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 </navigation>

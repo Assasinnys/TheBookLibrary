@@ -29,4 +29,7 @@ interface BookApi {
         @Path("id") id: Long
     ): Response<BookResponse>
 
+    @GET("/api/v1/book/own_books")
+    suspend fun getPersonalBooks(@Header("Authorization") bearerToken: String): Response<BookListResponse>
+
 }
