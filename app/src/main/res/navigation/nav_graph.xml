@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_bookListFragment_to_personalBooksFragment"
             app:destination="@id/personalBooksFragment" />
+        <action
+            android:id="@+id/action_bookListFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -57,4 +60,9 @@
             android:id="@+id/action_personalBooksFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.example.thebooklibrary.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

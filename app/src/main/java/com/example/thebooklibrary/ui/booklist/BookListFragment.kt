@@ -68,8 +68,8 @@ class BookListFragment : Fragment() {
             }
 
             R.id.menu_profile -> {
-                TODO("navigate to profile fragment")
-//                true
+                findNavController().navigate(R.id.action_bookListFragment_to_profileFragment)
+                true
             }
 
             else -> super.onOptionsItemSelected(item)

@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     override fun onCreate(owner: LifecycleOwner) {
-        // TODO request previous login
+        userLogin.value = repository.email
     }
 
     override fun onStart(owner: LifecycleOwner) {
@@ -56,6 +56,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
         when (resultData) {
             is ResultData.Success -> {
                 repository.token = resultData.value.data
+                repository.email = userLogin.value ?: ""
                 _isLoggedIn.value = true
             }
             is ResultData.Failure -> {

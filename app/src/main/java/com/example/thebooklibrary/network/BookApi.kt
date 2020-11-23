@@ -33,6 +33,18 @@ interface BookApi {
     suspend fun getPersonalBooks(@Header(AUTHORIZATION_HEADER) bearerToken: String): Response<BookListResponse>
 
     @POST("/api/v1/books")
-    suspend fun sendNewBook(@Header(AUTHORIZATION_HEADER) bearerToken: String, @Body newBookRequest: NewBookRequest): Response<ResponseBody>
+    suspend fun sendNewBook(
+        @Header(AUTHORIZATION_HEADER) bearerToken: String,
+        @Body newBookRequest: NewBookRequest
+    ): Response<ResponseBody>
+
+    @PUT("/api/v1/books/return/{id}")
+    suspend fun returnBook(
+        @Header(AUTHORIZATION_HEADER) bearerToken: String,
+        @Path("id") bookId: Long
+    ): Response<BookResponse>
+
+    @GET("/api/v1/book/user_read")
+    suspend fun userRead(@Header(AUTHORIZATION_HEADER) bearerToken: String): Response<BookResponse>
 
 }

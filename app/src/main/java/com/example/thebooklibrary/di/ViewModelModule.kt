@@ -6,6 +6,7 @@ import com.example.thebooklibrary.ui.bookdetails.BookDetailsViewModel
 import com.example.thebooklibrary.ui.booklist.BookListViewModel
 import com.example.thebooklibrary.ui.login.LoginViewModel
 import com.example.thebooklibrary.ui.personalbooks.PersonalBooksViewModel
+import com.example.thebooklibrary.ui.profile.ProfileViewModel
 import com.example.thebooklibrary.ui.registration.RegistrationViewModel
 import dagger.Binds
 import dagger.Module
@@ -39,6 +40,11 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(PersonalBooksViewModel::class)
     fun personalBooksViewModel(personalBooksViewModel: PersonalBooksViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    fun profileViewModel(profileViewModel: ProfileViewModel): ViewModel
 
     @Binds
     @Singleton

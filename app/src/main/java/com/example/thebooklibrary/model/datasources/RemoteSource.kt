@@ -11,4 +11,6 @@ interface RemoteSource {
     suspend fun getBook(token: String, bookId: Long): ResultData<BookResponse>
     suspend fun getPersonalBooks(token: String): ResultData<BookListResponse>
     suspend fun sendNewBook(token: String, name: String): ResultData<ResponseBody>
+    suspend fun returnBook(token: String, bookId: Long): ResultData<BookResponse>
+    suspend fun userRead(token: String): ResultData<BookResponse>
 }

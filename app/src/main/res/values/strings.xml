@@ -25,6 +25,10 @@
     <string name="book_status">Status:</string>
     <string name="book_deadline">Deadline:</string>
 
+    <string name="profile_email">Your Email:</string>
+    <string name="profile_reserved_book">Reserved book:</string>
+    <string name="profile_return_book">Return book</string>
+
     <string name="title_personal_book">Personal Books</string>
     <string name="title_profile">My Profile</string>
     <string name="title_add_book">Add Book</string>

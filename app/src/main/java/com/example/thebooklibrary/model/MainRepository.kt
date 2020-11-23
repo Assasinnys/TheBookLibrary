@@ -20,6 +20,8 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource)
             field = "Bearer $value"
         }
 
+    var email: String = ""
+
     private var selectedBookId: Long? = null
 
     suspend fun loginUser(login: String, pass: String): ResultData<UserLoginResponse> {
@@ -57,6 +59,14 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource)
 
     suspend fun sendNewBook(name: String): ResultData<ResponseBody> {
         return remoteSource.sendNewBook(token, name)
+    }
+
+    suspend fun returnBook(bookId: Long): ResultData<BookResponse> {
+        return remoteSource.returnBook(token, bookId)
+    }
+
+    suspend fun userRead(): ResultData<BookResponse> {
+        return remoteSource.userRead(token)
     }
 
     fun saveSelectedBook(id: Long) {
