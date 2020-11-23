@@ -2,9 +2,7 @@ package com.example.thebooklibrary.ui.personalbooks
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.FragmentPersonalBooksBinding
 import com.example.thebooklibrary.di.ViewModelFactory
+import com.example.thebooklibrary.ui.personalbooks.addbook.AddNewBookDialog
 import com.example.thebooklibrary.util.BookListAdapter
 import com.example.thebooklibrary.util.daggerAppComponent
 import com.example.thebooklibrary.util.toast
@@ -51,10 +50,30 @@ class PersonalBooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setupViewModelObservers()
         binding.rvBooks.adapter = BookListAdapter {
             viewModel.showBookDetails(it.tag)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_personal_books, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.add_personal_book -> {
+                showAddBookDialog()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showAddBookDialog() {
+        AddNewBookDialog().show(childFragmentManager, null)
     }
 
     private fun setupViewModelObservers() {

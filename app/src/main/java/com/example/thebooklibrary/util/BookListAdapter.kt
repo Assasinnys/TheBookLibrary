@@ -3,7 +3,9 @@ package com.example.thebooklibrary.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.thebooklibrary.R
 import com.example.thebooklibrary.databinding.ItemBookListBinding
 import com.example.thebooklibrary.model.Book
 
@@ -34,7 +36,7 @@ class BookListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
-        val binding = ItemBookListBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = DataBindingUtil.inflate<ItemBookListBinding>(LayoutInflater.from(parent.context), R.layout.item_book_list, parent, false)
         return BookHolder(binding, itemClickListener)
     }
 

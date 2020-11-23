@@ -1,10 +1,12 @@
 package com.example.thebooklibrary.model.datasources
 
 import com.example.thebooklibrary.network.BookApi
+import com.example.thebooklibrary.network.request.NewBookRequest
 import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.*
 import com.example.thebooklibrary.util.BaseDataSource
 import com.example.thebooklibrary.util.ResultData
+import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,6 +40,12 @@ class RemoteSourceImpl @Inject constructor(private val api: BookApi) : RemoteSou
     override suspend fun getPersonalBooks(token: String): ResultData<BookListResponse> {
         return getData(ErrorResponse::class.java) {
             api.getPersonalBooks(token)
+        }
+    }
+
+    override suspend fun sendNewBook(token: String, name: String): ResultData<ResponseBody> {
+        return getData(ErrorResponse::class.java) {
+            api.sendNewBook(token, NewBookRequest(name))
         }
     }
 }

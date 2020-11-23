@@ -39,6 +39,7 @@ abstract class BaseDataSource {
             }
             return formatError(response.errorBody()?.string(), errorClass)
         } catch (exception: Exception) {
+            exception.printStackTrace()
             return formatError(null, null)
         }
     }

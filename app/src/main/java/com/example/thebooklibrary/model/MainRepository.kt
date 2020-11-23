@@ -6,12 +6,13 @@ import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.*
 import com.example.thebooklibrary.util.ResultData
 import com.squareup.moshi.Moshi
+import okhttp3.ResponseBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainRepository @Inject constructor(private val api: BookApi, private val remoteSource: RemoteSource) {
+class MainRepository @Inject constructor(private val remoteSource: RemoteSource) {
 
     private val moshi = Moshi.Builder().build()
     var token: String = ""
@@ -52,6 +53,10 @@ class MainRepository @Inject constructor(private val api: BookApi, private val r
 
     suspend fun getPersonalBooks(): ResultData<BookListResponse> {
         return remoteSource.getPersonalBooks(token)
+    }
+
+    suspend fun sendNewBook(name: String): ResultData<ResponseBody> {
+        return remoteSource.sendNewBook(token, name)
     }
 
     fun saveSelectedBook(id: Long) {

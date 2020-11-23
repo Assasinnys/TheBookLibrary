@@ -16,3 +16,5 @@ const val ERR_INVALID_EMAIL = R.string.error_invalid_email
 const val ERR_PASS_TOO_SHORT = R.string.error_incorrect_pass
 const val ERR_ALREADY_EXIST = R.string.error_already_exist
 const val CONNECTION_ERROR = "connection error" // TODO change to string res
+
+const val AUTHORIZATION_HEADER = "Authorization"

@@ -3,10 +3,12 @@
 
     <string name="btn_login">Log In</string>
     <string name="btn_registration">Registration</string>
-    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="btn_send">Send Book</string>
 
+    <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_login">Email</string>
     <string name="hint_password">Password</string>
+    <string name="hint_book_name">Book Name</string>
 
     <string name="no_error" translatable="false" />
     <string name="error_empty_field">Empty field</string>
@@ -25,4 +27,5 @@
 
     <string name="title_personal_book">Personal Books</string>
     <string name="title_profile">My Profile</string>
+    <string name="title_add_book">Add Book</string>
 </resources>

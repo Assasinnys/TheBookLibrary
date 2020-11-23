@@ -5,6 +5,7 @@ import com.example.thebooklibrary.ui.bookdetails.BookDetailsFragment
 import com.example.thebooklibrary.ui.booklist.BookListFragment
 import com.example.thebooklibrary.ui.login.LoginFragment
 import com.example.thebooklibrary.ui.personalbooks.PersonalBooksFragment
+import com.example.thebooklibrary.ui.personalbooks.addbook.AddNewBookDialog
 import com.example.thebooklibrary.ui.registration.RegistrationFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -24,4 +25,5 @@ interface AppComponent {
     fun inject(fragment: BookListFragment)
     fun inject(fragment: BookDetailsFragment)
     fun inject(fragment: PersonalBooksFragment)
+    fun inject(fragment: AddNewBookDialog)
 }
