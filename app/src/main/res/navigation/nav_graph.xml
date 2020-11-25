@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.thebooklibrary.ui.login.LoginFragment"
-        android:label="LoginFragment"
+        android:label="@string/label_login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.thebooklibrary.ui.registration.RegistrationFragment"
-        android:label="RegistrationFragment"
+        android:label="@string/label_registration"
         tools:layout="@layout/fragment_registration" >
         <action
             android:id="@+id/action_registrationFragment_to_bookListFragment"
@@ -33,7 +33,7 @@
         android:id="@+id/bookListFragment"
         tools:layout="@layout/fragment_book_list"
         android:name="com.example.thebooklibrary.ui.booklist.BookListFragment"
-        android:label="BookListFragment" >
+        android:label="@string/label_all_books" >
         <action
             android:id="@+id/action_bookListFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
@@ -49,13 +49,13 @@
         android:id="@+id/bookDetailsFragment"
         android:name="com.example.thebooklibrary.ui.bookdetails.BookDetailsFragment"
         tools:layout="@layout/fragment_book_details"
-        android:label="BookDetailsFragment" />
+        android:label="@string/label_book_info" />
 
     <fragment
         android:id="@+id/personalBooksFragment"
         tools:layout="@layout/fragment_personal_books"
         android:name="com.example.thebooklibrary.ui.personalbooks.PersonalBooksFragment"
-        android:label="PersonalBooksFragment" >
+        android:label="@string/label_personal_books" >
         <action
             android:id="@+id/action_personalBooksFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
@@ -64,5 +64,5 @@
         android:id="@+id/profileFragment"
         tools:layout="@layout/fragment_profile"
         android:name="com.example.thebooklibrary.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="@string/label_profile" />
 </navigation>

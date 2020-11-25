@@ -32,4 +32,11 @@
     <string name="title_personal_book">Personal Books</string>
     <string name="title_profile">My Profile</string>
     <string name="title_add_book">Add Book</string>
+
+    <string name="label_login">Login</string>
+    <string name="label_registration">Registration</string>
+    <string name="label_book_info">Info About Book</string>
+    <string name="label_all_books">Books in Library</string>
+    <string name="label_personal_books">Personal Books</string>
+    <string name="label_profile">Profile</string>
 </resources>
