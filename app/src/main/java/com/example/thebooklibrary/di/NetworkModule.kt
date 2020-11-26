@@ -2,6 +2,8 @@ package com.example.thebooklibrary.di
 
 import com.example.thebooklibrary.network.BookApi
 import com.example.thebooklibrary.util.BASE_URL
+import com.example.thebooklibrary.util.MoshiDateConverter
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -28,9 +30,12 @@ class NetworkModule {
     @Provides
     @Singleton
     fun getRetrofit(client: OkHttpClient): BookApi {
+        val moshi = Moshi.Builder()
+            .add(MoshiDateConverter())
+            .build()
         return Retrofit.Builder()
             .client(client)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .baseUrl(BASE_URL)
             .build()
             .create(BookApi::class.java)
