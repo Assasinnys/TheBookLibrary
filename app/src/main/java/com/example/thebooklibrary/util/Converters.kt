@@ -1,6 +1,7 @@
 package com.example.thebooklibrary.util
 
 import androidx.room.TypeConverter
+import com.example.thebooklibrary.R
 import com.squareup.moshi.*
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,7 +33,41 @@ class MoshiDateConverter : JsonAdapter<Date>() {
     @ToJson
     override fun toJson(writer: JsonWriter, value: Date?) {}
 
-    companion object {
+    private companion object {
         const val SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm"
     }
+}
+
+class RoomEnumStatusConverter {
+    @TypeConverter
+    fun bookStatusToSomething(status: BookStatus): String {
+        return status.toString()
+    }
+
+    @TypeConverter
+    fun stringToBookStatus(status: String): BookStatus {
+        return BookStatus.valueOf(status)
+    }
+}
+
+/**
+ * I didn't want to write the adapter for this enum because the statuses on the server is written in lower case. :)
+ */
+
+@Suppress("EnumEntryName")
+enum class BookStatus {
+
+    in_library {
+        override fun asStringRes() = R.string.status_in_library
+    },
+
+    picked_up {
+        override fun asStringRes() = R.string.status_picked_up
+    },
+
+    reserved {
+        override fun asStringRes() = R.string.status_reserved
+    };
+
+    abstract fun asStringRes(): Int
 }

@@ -9,9 +9,10 @@ import com.example.thebooklibrary.database.dao.BooksDao
 import com.example.thebooklibrary.model.Book
 import com.example.thebooklibrary.util.BOOK_DATABASE
 import com.example.thebooklibrary.util.RoomDateConverter
+import com.example.thebooklibrary.util.RoomEnumStatusConverter
 
 @Database(entities = [Book::class], version = 1, exportSchema = false)
-@TypeConverters(RoomDateConverter::class)
+@TypeConverters(RoomDateConverter::class, RoomEnumStatusConverter::class)
 abstract class BookDatabase : RoomDatabase() {
 
     abstract fun booksDao() : BooksDao

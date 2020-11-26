@@ -1,6 +1,5 @@
 package com.example.thebooklibrary.ui.bookdetails
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,9 +18,6 @@ class BookDetailsViewModel @Inject constructor(private val repository: MainRepos
     private val _toastError = MutableLiveData<String>()
     val toastError: LiveData<String> get() = _toastError
 
-    private val _bookTitle = MutableLiveData<String>()
-    val bookTitle: LiveData<String> get() = _bookTitle
-
     init {
         requestSelectedBook()
     }
@@ -32,7 +28,6 @@ class BookDetailsViewModel @Inject constructor(private val repository: MainRepos
 
                 is ResultData.Success -> {
                     _book.value = response.value.data
-                    _bookTitle.value = response.value.data.name
                 }
 
                 is ResultData.Failure -> _toastError.value = response.message

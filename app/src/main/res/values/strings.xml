@@ -39,4 +39,8 @@
     <string name="label_all_books">Books in Library</string>
     <string name="label_personal_books">Personal Books</string>
     <string name="label_profile">Profile</string>
+
+    <string name="status_picked_up">picked up</string>
+    <string name="status_reserved">reserved</string>
+    <string name="status_in_library">in library</string>
 </resources>
