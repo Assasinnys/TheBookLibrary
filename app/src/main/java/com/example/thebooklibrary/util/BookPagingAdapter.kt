@@ -12,7 +12,7 @@ import com.example.thebooklibrary.model.Book
 
 class BookPagingAdapter(private val listener: View.OnClickListener) : PagedListAdapter<Book, BookPagingAdapter.BookHolder>(BookDiffUtilCallback()){
 
-    class BookHolder(private val binding: ItemBookListBinding, listener: View.OnClickListener) : RecyclerView.ViewHolder(binding.root) {
+    class BookHolder(private val binding: ItemBookListBinding, private val listener: View.OnClickListener) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener(listener)
@@ -20,6 +20,12 @@ class BookPagingAdapter(private val listener: View.OnClickListener) : PagedListA
 
         fun bind(book: Book) {
             binding.book = book
+            if (book.status == BookStatus.in_library) {
+                binding.btnReserve.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener(listener)
+                }
+            }
         }
     }
 

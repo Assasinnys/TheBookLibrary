@@ -43,4 +43,6 @@
     <string name="status_picked_up">picked up</string>
     <string name="status_reserved">reserved</string>
     <string name="status_in_library">in library</string>
+
+    <string name="toast_book_reserved">Book successfully reserved</string>
 </resources>

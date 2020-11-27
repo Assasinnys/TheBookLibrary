@@ -5,6 +5,8 @@ import com.example.thebooklibrary.model.Book
 import com.example.thebooklibrary.model.MainRepository
 import com.example.thebooklibrary.network.response.BaseResponse
 import com.example.thebooklibrary.network.response.BookListResponse
+import com.example.thebooklibrary.network.response.BookResponse
+import com.example.thebooklibrary.util.BOOK_RESERVED
 import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
 import com.example.thebooklibrary.util.NO_ERROR
 import com.example.thebooklibrary.util.ResultData
@@ -17,6 +19,9 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
 
     private val _toastError = MutableLiveData<String>()
     val toastError: LiveData<String> get() = _toastError
+
+    private val _toastRes = MutableLiveData<Int>()
+    val toastRes: LiveData<Int> get() = _toastRes
 
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -33,6 +38,8 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
     val bookName = MutableLiveData<String>()
 
     override fun onStart(owner: LifecycleOwner) {
+        _toastError.value = ""
+        _toastRes.value = 0
         _showBookDetails.value = false
         requestPersonalBooks()
     }
@@ -92,6 +99,23 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
                 _errorBookNameField.value = NO_ERROR
                 true
             }
+        }
+    }
+
+    fun reserveBook(id: Any) {
+        if (id is Long) {
+            viewModelScope.launch {
+                val result = repository.reserveBook(id)
+                checkReserveResult(result)
+            }
+        }
+    }
+
+    private fun checkReserveResult(result: ResultData<BookResponse>) {
+        when (result) {
+            is ResultData.Success -> _toastRes.value = BOOK_RESERVED
+
+            is ResultData.Failure -> _toastError.value = result.message
         }
     }
 }

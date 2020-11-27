@@ -48,3 +48,9 @@ fun Fragment.toast(text: String, isLong: Boolean = false) {
 
     Toast.makeText(context, text, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
 }
+
+fun Fragment.toast(textRes: Int, isLong: Boolean = false) {
+    if (textRes <= 0) return
+
+    Toast.makeText(context, textRes, if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+}

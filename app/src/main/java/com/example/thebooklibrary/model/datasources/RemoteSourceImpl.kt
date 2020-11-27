@@ -60,4 +60,10 @@ class RemoteSourceImpl @Inject constructor(private val api: BookApi) : RemoteSou
             api.userRead(token)
         }
     }
+
+    override suspend fun reserveBook(token: String, bookId: Long): ResultData<BookResponse> {
+        return getData(ErrorResponse::class.java) {
+            api.reserveBook(token, bookId)
+        }
+    }
 }

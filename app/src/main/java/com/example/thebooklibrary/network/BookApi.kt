@@ -47,4 +47,7 @@ interface BookApi {
     @GET("/api/v1/book/user_read")
     suspend fun userRead(@Header(AUTHORIZATION_HEADER) bearerToken: String): Response<BookResponse>
 
+    @PUT("/api/v1/books/reserve/{id}")
+    suspend fun reserveBook(@Header(AUTHORIZATION_HEADER) bearerToken: String, @Path("id") id: Long): Response<BookResponse>
+
 }

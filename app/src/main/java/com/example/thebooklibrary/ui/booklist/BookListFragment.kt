@@ -51,8 +51,12 @@ class BookListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setupViewModelObservers()
-        binding.rvBooks.adapter = BookPagingAdapter {
-            viewModel.showBookDetails(it.tag)
+        binding.rvBooks.adapter = BookPagingAdapter { v ->
+            if (v.id == R.id.btn_reserve) {
+                viewModel.reserveBook(v.tag)
+            } else {
+                viewModel.showBookDetails(v.tag)
+            }
         }
     }
 
@@ -78,7 +82,10 @@ class BookListFragment : Fragment() {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            toastError.observe(viewLifecycleOwner) {
+            toastRes.observe(viewLifecycleOwner) {
+                toast(it)
+            }
+            toast.observe(viewLifecycleOwner) {
                 toast(it)
             }
             bookLiveData.observe(viewLifecycleOwner) {

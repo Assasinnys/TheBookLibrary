@@ -69,6 +69,10 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource)
         return remoteSource.userRead(token)
     }
 
+    suspend fun reserveBook(bookId: Long): ResultData<BookResponse> {
+        return remoteSource.reserveBook(token, bookId)
+    }
+
     fun saveSelectedBook(id: Long) {
         selectedBookId = id
     }

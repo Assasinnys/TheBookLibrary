@@ -23,7 +23,7 @@ class BookListAdapter(
     }
 
 
-    class BookHolder(private val binding: ItemBookListBinding, listener: View.OnClickListener) :
+    class BookHolder(private val binding: ItemBookListBinding, private val listener: View.OnClickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -32,6 +32,12 @@ class BookListAdapter(
 
         fun bind(book: Book) {
             binding.book = book
+            if (book.status == BookStatus.in_library) {
+                binding.btnReserve.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener(listener)
+                }
+            }
         }
     }
 
