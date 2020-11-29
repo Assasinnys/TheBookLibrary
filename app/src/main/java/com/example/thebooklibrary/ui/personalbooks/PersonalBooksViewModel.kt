@@ -3,8 +3,6 @@ package com.example.thebooklibrary.ui.personalbooks
 import androidx.lifecycle.*
 import com.example.thebooklibrary.model.Book
 import com.example.thebooklibrary.model.MainRepository
-import com.example.thebooklibrary.network.response.BaseResponse
-import com.example.thebooklibrary.network.response.BookListResponse
 import com.example.thebooklibrary.network.response.BookResponse
 import com.example.thebooklibrary.util.BOOK_RESERVED
 import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
@@ -45,14 +43,14 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
     }
 
     private fun requestPersonalBooks() {
-        viewModelScope.launch {
-            processResult(repository.getPersonalBooks())
+        repository.getPersonalBooks().observeForever {
+            processResult(it)
         }
     }
 
-    private fun processResult(result: ResultData<BookListResponse>) {
+    private fun processResult(result: ResultData<List<Book>>) {
         when (result) {
-            is ResultData.Success -> _bookList.value = result.value.data
+            is ResultData.Success -> _bookList.value = result.value
 
             is ResultData.Failure -> _toastError.value = result.message
         }

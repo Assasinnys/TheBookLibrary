@@ -19,5 +19,6 @@ data class Book(
     @Json(name = "updated_at") var updatedAt: Date?,
     @Json(name = "status") var status: BookStatus?,
     @Json(name = "dead_line") var deadline: String?,
-    @Json(name = "reader_user_id") var readerUserId: Long?
+    @Json(name = "reader_user_id") var readerUserId: Long?,
+    var isPersonal: Boolean = false
 )

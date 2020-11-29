@@ -19,19 +19,16 @@ class BookDetailsViewModel @Inject constructor(private val repository: MainRepos
     val toastError: LiveData<String> get() = _toastError
 
     init {
-        requestSelectedBook()
+        repository.getBook2().observeForever {
+            checkResult(it)
+        }
     }
 
-    private fun requestSelectedBook() {
-        viewModelScope.launch {
-            when (val response = repository.getBook()) {
+    private fun checkResult(result: ResultData<Book>) {
+        when (result) {
+            is ResultData.Success -> _book.value = result.value
 
-                is ResultData.Success -> {
-                    _book.value = response.value.data
-                }
-
-                is ResultData.Failure -> _toastError.value = response.message
-            }
+            is ResultData.Failure -> _toastError.value = result.message
         }
     }
 

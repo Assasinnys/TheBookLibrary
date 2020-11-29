@@ -1,10 +1,12 @@
 package com.example.thebooklibrary.model
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.thebooklibrary.database.dao.BooksDao
 import com.example.thebooklibrary.model.datasources.RemoteSource
-import com.example.thebooklibrary.network.BookApi
-import com.example.thebooklibrary.network.request.UserAuthRequest
 import com.example.thebooklibrary.network.response.*
 import com.example.thebooklibrary.util.ResultData
+import com.example.thebooklibrary.util.responseLiveData
 import com.squareup.moshi.Moshi
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -12,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainRepository @Inject constructor(private val remoteSource: RemoteSource) {
+class MainRepository @Inject constructor(private val remoteSource: RemoteSource, private val booksDao: BooksDao) {
 
     private val moshi = Moshi.Builder().build()
     var token: String = ""
@@ -46,15 +48,27 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource)
         return remoteSource.getBookList(token, page, limit)
     }
 
-    suspend fun getBook(): ResultData<BookResponse> {
-        selectedBookId?.let { id ->
-            return remoteSource.getBook(token, id)
+    fun getPersonalBooks() = responseLiveData(
+        roomQuery = { booksDao.getPersonalBooks() },
+        networkRequest = { remoteSource.getPersonalBooks(token) },
+        roomSaveQuery = {
+            booksDao.addPersonalBooks(
+                it.data.map { book ->
+                    book.apply { isPersonal = true }
+                }
+            )
         }
-        return ResultData.failure("Book is not specified")
-    }
+    )
 
-    suspend fun getPersonalBooks(): ResultData<BookListResponse> {
-        return remoteSource.getPersonalBooks(token)
+    fun getBook2(): LiveData<ResultData<Book>> {
+        selectedBookId?.let {id ->
+            return responseLiveData(
+                roomQuery = { booksDao.getBook(id) },
+                networkRequest = { remoteSource.getBook(token, id) },
+                roomSaveQuery = { booksDao.addPersonalBooks(listOf(it.data)) }
+            )
+        }
+        return MutableLiveData(ResultData.failure("Book is not specified"))
     }
 
     suspend fun sendNewBook(name: String): ResultData<ResponseBody> {
