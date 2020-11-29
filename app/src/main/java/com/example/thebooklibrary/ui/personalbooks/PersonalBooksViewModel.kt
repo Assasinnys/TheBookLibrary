@@ -4,10 +4,7 @@ import androidx.lifecycle.*
 import com.example.thebooklibrary.model.Book
 import com.example.thebooklibrary.model.MainRepository
 import com.example.thebooklibrary.network.response.BookResponse
-import com.example.thebooklibrary.util.BOOK_RESERVED
-import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
-import com.example.thebooklibrary.util.NO_ERROR
-import com.example.thebooklibrary.util.ResultData
+import com.example.thebooklibrary.util.*
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import javax.inject.Inject
@@ -24,8 +21,7 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _showBookDetails = MutableLiveData<Boolean>()
-    val showBookDetails: LiveData<Boolean> get() = _showBookDetails
+    val showBookDetails = SingleLiveEvent<Boolean>()
 
     private val _bookList = MutableLiveData<List<Book>>()
     val bookList: LiveData<List<Book>> get() = _bookList
@@ -33,12 +29,11 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
     private val _errorBookNameField = MutableLiveData(NO_ERROR)
     val errorBookNameField: LiveData<Int> get() = _errorBookNameField
 
-    val bookName = MutableLiveData<String>()
+    val newBookName = MutableLiveData<String>()
 
     override fun onStart(owner: LifecycleOwner) {
         _toastError.value = ""
         _toastRes.value = 0
-        _showBookDetails.value = false
         requestPersonalBooks()
     }
 
@@ -59,12 +54,12 @@ class PersonalBooksViewModel @Inject constructor(private val repository: MainRep
     fun showBookDetails(id: Any) {
         if (id is Long) {
             repository.saveSelectedBook(id)
-            _showBookDetails.value = true
+            showBookDetails.value = true
         }
     }
 
     fun addNewBook() {
-        val book: String = bookName.value ?: ""
+        val book: String = newBookName.value ?: ""
 
         if (isBookNameValid(book)) {
             sendNewBook(book)

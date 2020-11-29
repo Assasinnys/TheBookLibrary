@@ -10,6 +10,7 @@ import com.example.thebooklibrary.network.response.BookResponse
 import com.example.thebooklibrary.util.BOOK_RESERVED
 import com.example.thebooklibrary.util.BookDataSource
 import com.example.thebooklibrary.util.ResultData
+import com.example.thebooklibrary.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +27,7 @@ class BookListViewModel @Inject constructor(private val repository: MainReposito
 
     val bookLiveData: LiveData<PagedList<Book>>
 
-    private val _showBookDetails = MutableLiveData<Boolean>()
-    val showBookDetails: LiveData<Boolean> get() = _showBookDetails
+    val showBookDetails = SingleLiveEvent<Boolean>()
 
     init {
         val config = PagedList.Config.Builder()
@@ -42,7 +42,6 @@ class BookListViewModel @Inject constructor(private val repository: MainReposito
     override fun onStart(owner: LifecycleOwner) {
         _toast.value = ""
         _toastRes.value = 0
-        _showBookDetails.value = false
     }
 
     private fun initializePagedListBuilder(config: PagedList.Config): LivePagedListBuilder<Int, Book> {
@@ -57,7 +56,7 @@ class BookListViewModel @Inject constructor(private val repository: MainReposito
     fun showBookDetails(id: Any) {
         if (id is Long) {
             repository.saveSelectedBook(id)
-            _showBookDetails.value = true
+            showBookDetails.value = true
         }
     }
 

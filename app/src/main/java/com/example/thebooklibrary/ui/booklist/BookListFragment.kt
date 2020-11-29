@@ -91,8 +91,8 @@ class BookListFragment : Fragment() {
             bookLiveData.observe(viewLifecycleOwner) {
                 (binding.rvBooks.adapter as BookPagingAdapter).submitList(it)
             }
-            showBookDetails.observe(viewLifecycleOwner) {
-                if (it) findNavController().navigate(R.id.action_bookListFragment_to_bookDetailsFragment)
+            showBookDetails.observeSingle(viewLifecycleOwner) {
+                if (it == true) findNavController().navigate(R.id.action_bookListFragment_to_bookDetailsFragment)
             }
         }
     }

@@ -47,8 +47,8 @@ class RegistrationFragment : Fragment() {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            isRegistered.observe(viewLifecycleOwner) {
-                if(it){
+            isRegistered.observeSingle(viewLifecycleOwner) {
+                if(it == true){
                     toast("Registered")
                     findNavController().navigate(R.id.action_registrationFragment_to_bookListFragment)
                 }

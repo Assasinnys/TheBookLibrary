@@ -20,20 +20,18 @@ class RegistrationViewModel @Inject constructor(
     val passField = MutableLiveData<String>()
     val confPassField = MutableLiveData<String>()
 
-    private val _isRegistered = MutableLiveData(false)
     private val _loginErrorField = MutableLiveData(NO_ERROR)
     private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
     private val _isLoading = MutableLiveData(false)
 
-    val isRegistered: LiveData<Boolean> get() = _isRegistered
+    val isRegistered = SingleLiveEvent<Boolean>()
     val loginErrorField: LiveData<Int> get() = _loginErrorField
     val passErrorField: LiveData<Int> get() = _passErrorField
     val toastError: LiveData<String> get() = _toastError
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     override fun onStart(owner: LifecycleOwner) {
-        _isRegistered.value = false
         _toastError.value = ""
     }
 
@@ -54,7 +52,7 @@ class RegistrationViewModel @Inject constructor(
         when (resultData) {
             is ResultData.Success -> {
                 repository.token = resultData.value.data.token
-                _isRegistered.value = true
+                isRegistered.value = true
             }
 
             is ResultData.Failure -> processError(resultData.message)
@@ -89,7 +87,7 @@ class RegistrationViewModel @Inject constructor(
                 _toastError.value = response.data
             }
             is UserRegistrationResponse -> {
-                _isRegistered.value = true
+                isRegistered.value = true
             }
             is ErrorRegistrationResponse -> {
                 response.data.mail?.let {

@@ -91,8 +91,8 @@ class PersonalBooksFragment : Fragment() {
             bookList.observe(viewLifecycleOwner) {
                 (binding.rvBooks.adapter as BookListAdapter).setList(it)
             }
-            showBookDetails.observe(viewLifecycleOwner) {
-                if (it) findNavController().navigate(R.id.action_personalBooksFragment_to_bookDetailsFragment)
+            showBookDetails.observeSingle(viewLifecycleOwner) {
+                if (it == true) findNavController().navigate(R.id.action_personalBooksFragment_to_bookDetailsFragment)
             }
         }
     }

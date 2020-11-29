@@ -8,6 +8,7 @@ import com.example.thebooklibrary.network.response.UserLoginResponse
 import com.example.thebooklibrary.util.ERR_EMPTY_FIELD
 import com.example.thebooklibrary.util.NO_ERROR
 import com.example.thebooklibrary.util.ResultData
+import com.example.thebooklibrary.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,15 +17,12 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
 
     val userLogin = MutableLiveData<String>()
     val userPass = MutableLiveData<String>()
-    private val _isLoggedIn = MutableLiveData(false)
     private val _loginErrorField = MutableLiveData(NO_ERROR)
     private val _passErrorField = MutableLiveData(NO_ERROR)
     private val _toastError = MutableLiveData<String>()
     private val _isLoading = MutableLiveData(false)
 
-    //    val userLogin: LiveData<String> get() = _userLogin
-//    val userPass: LiveData<String> get() = _userPass
-    val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
+    val isLoggedIn = SingleLiveEvent<Boolean>()
     val loginErrorField: LiveData<Int> get() = _loginErrorField
     val passErrorField: LiveData<Int> get() = _passErrorField
     val toastError: LiveData<String> get() = _toastError
@@ -32,10 +30,10 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
 
     override fun onCreate(owner: LifecycleOwner) {
         userLogin.value = repository.email
+        isLoggedIn.value = repository.token.isNotEmpty()
     }
 
     override fun onStart(owner: LifecycleOwner) {
-        _isLoggedIn.value = false
         _toastError.value = ""
     }
 
@@ -57,7 +55,7 @@ class LoginViewModel @Inject constructor(private val repository: MainRepository)
             is ResultData.Success -> {
                 repository.token = resultData.value.data
                 repository.email = userLogin.value ?: ""
-                _isLoggedIn.value = true
+                isLoggedIn.value = true
             }
             is ResultData.Failure -> {
                 _toastError.value = resultData.message

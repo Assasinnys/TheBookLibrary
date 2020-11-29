@@ -59,9 +59,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            isLoggedIn.observe(viewLifecycleOwner) {
-                if (it) {
-                    // TODO navigate to content
+            isLoggedIn.observeSingle(viewLifecycleOwner) {
+                if (it == true) {
                     toast("logged in")
                     findNavController().navigate(R.id.action_loginFragment_to_bookListFragment)
                 }
