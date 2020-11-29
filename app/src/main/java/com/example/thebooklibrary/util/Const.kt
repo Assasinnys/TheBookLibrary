@@ -20,3 +20,6 @@ const val BOOK_RESERVED = R.string.toast_book_reserved
 
 
 const val AUTHORIZATION_HEADER = "Authorization"
+
+const val TOKEN_PREF = "token"
+const val EMAIL_PREF = "email"

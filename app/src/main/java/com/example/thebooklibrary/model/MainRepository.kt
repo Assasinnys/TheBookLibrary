@@ -3,6 +3,7 @@ package com.example.thebooklibrary.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.thebooklibrary.database.dao.BooksDao
+import com.example.thebooklibrary.model.datasources.AppPrefSource
 import com.example.thebooklibrary.model.datasources.RemoteSource
 import com.example.thebooklibrary.network.response.*
 import com.example.thebooklibrary.util.ResultData
@@ -14,15 +15,37 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainRepository @Inject constructor(private val remoteSource: RemoteSource, private val booksDao: BooksDao) {
+class MainRepository @Inject constructor(
+    private val remoteSource: RemoteSource,
+    private val booksDao: BooksDao,
+    private val appPrefSource: AppPrefSource
+) {
 
-    private val moshi = Moshi.Builder().build()
     var token: String = ""
         set(value) {
             field = "Bearer $value"
+            appPrefSource.saveToken(field)
+        }
+        get() {
+            return if (field.isEmpty()) {
+                appPrefSource.getToken()
+            } else {
+                field
+            }
         }
 
     var email: String = ""
+        set(value) {
+            field = value
+            appPrefSource.saveEmail(field)
+        }
+        get() {
+            return if (field.isEmpty()) {
+                appPrefSource.getEmail()
+            } else {
+                field
+            }
+        }
 
     private var selectedBookId: Long? = null
 
@@ -34,7 +57,11 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource,
         return remoteSource.register(login, pass)
     }
 
-    private fun <T : BaseResponse> processResponse(response: Response<out BaseResponse>, errorClass: Class<T>): BaseResponse? {
+    private fun <T : BaseResponse> processResponse(
+        response: Response<out BaseResponse>,
+        errorClass: Class<T>
+    ): BaseResponse? {
+        val moshi = Moshi.Builder().build()
         return if (response.isSuccessful) {
             response.body()
         } else {
@@ -61,7 +88,7 @@ class MainRepository @Inject constructor(private val remoteSource: RemoteSource,
     )
 
     fun getBook2(): LiveData<ResultData<Book>> {
-        selectedBookId?.let {id ->
+        selectedBookId?.let { id ->
             return responseLiveData(
                 roomQuery = { booksDao.getBook(id) },
                 networkRequest = { remoteSource.getBook(token, id) },
